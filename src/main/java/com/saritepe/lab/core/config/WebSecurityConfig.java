@@ -1,7 +1,6 @@
 package com.saritepe.lab.core.config;
 
 import com.saritepe.lab.core.model.entity.UserDetailServiceImpl;
-import com.saritepe.lab.core.model.entity.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -37,11 +36,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(daoAuthenticationProvider())
-                .inMemoryAuthentication()
-                .withUser("admin").password("{noop}admin").roles("USER")
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String userRawPassword = "user";
+        String userEncodedPassword = encoder.encode(userRawPassword);
+
+        String adminRawPassword = "admin";
+        String adminEncodedPassword = encoder.encode(adminRawPassword);
+
+        auth.authenticationProvider(daoAuthenticationProvider());
+        auth.inMemoryAuthentication()
+                .withUser("user")
+                .password(userEncodedPassword)
+                .roles("USER")
                 .and()
-                .withUser("user").password("{noop}user").roles("USER","ADMIN");
+                .withUser("admin")
+                .password(adminEncodedPassword)
+                .roles("ADMIN");
+
     }
 
     @Override
