@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Save Report</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container text-center">
+
+    <div th:replace="components :: header"></div>
+
+    <div class="card">
+        <div class="card-header">
+            <h1>Save Report</h1>
+        </div>
+        <div class="card-body">
+
+            <form class="needs-validation form-inline" novalidate th:action="@{/reports/s}" th:object="${reportDTO}"
+                  method="post">
+
+                <div class="row">
+                    <div class="col">
+                        <label for="fileNumber" class="form-label">File Number</label>
+                        <input type="number" class="form-control" id="fileNumber" placeholder="File Number"
+                               th:field="*{fileNumber}">
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="patientIdentityNumber" class="form-label">Patient Identity Number</label>
+                        <input type="number" class="form-control" id="patientIdentityNumber"
+                               placeholder="Patient Identity Number" th:field="*{patientIdentityNumber}">
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="patientFirstName" class="form-label">Patient First Name</label>
+                        <input type="text" class="form-control" id="patientFirstName" placeholder="Patient First Name"
+                               th:field="*{patientFirstName}">
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="patientLastName" class="form-label">Patient Last Name</label>
+                        <input type="text" class="form-control" id="patientLastName" placeholder="Patient Last Name"
+                               th:field="*{patientLastName}">
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-12 mb-4">
+                    <label for="diagnosisTitle" class="form-label">Diagnosis Title</label>
+                    <input type="text" class="form-control" id="diagnosisTitle" placeholder="Diagnosis Title"
+                           th:field="*{diagnosisTitle}">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+                <div class="col-12 mb-4">
+                    <label for="diagnosisDetail" class="form-label">Diagnosis Detail</label>
+                    <textarea type="" class="form-control" id="diagnosisDetail" placeholder="Diagnosis Detail"
+                           th:field="*{diagnosisDetail}"></textarea>
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                    <label for="dateOfIssue" class="form-label">Date of Issue</label>
+                    <input type="date" class="form-control" id="dateOfIssue" th:field="*{dateOfIssue}">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                    <label for="labWorkerHospitalIdentityNumber" class="form-label">Lab Worker ID</label>
+                    <input type="text" class="form-control" id="labWorkerHospitalIdentityNumber"
+                           placeholder="Lab Worker ID" th:field="*{labWorker.id}">
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="formFile" class="form-label">Image</label>
+                    <input class="form-control" type="file" id="formFile" th:file="${reportDTO.image}">
+                </div>
+
+                <div class="col-12 mb-4">
+                    <button class="btn btn-success" type="submit">Submit form</button>
+                </div>
+                <br>
+            </form>
+
+            <div class="card-footer">
+                <h2>Save</h2>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

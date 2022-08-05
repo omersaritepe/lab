@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Reports</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+<body>
+
+<div class="container text-center">
+
+    <div th:replace="components :: header"></div>
+
+    <form class="text-center mb-4 form-group" th:action="@{'/reports/page/1/' + ${pageSize}}">
+        Filter:
+        <input type="hidden" name="sortField" th:value="${sortField}" required>
+        <input type="hidden" name="sortDirection" th:value="${sortDirection}" required>
+        <input type="text" name="keyword" required>
+        <button class="btn btn-outline-success" type="submit" name="Search" value="Search">Search</button>
+        <a class="btn btn-outline-danger" th:href="@{/reports}">Clear</a>
+    </form>
+
+    <a type="button" class="btn btn-success" th:href="@{/reports/save}">
+        <i class="bi bi-person-plus-fill"> Save</i>
+    </a>
+
+
+    <div class="table-responsive-md mt-3">
+        <table class="table table-dark table-striped">
+            <thead class="bg-dark">
+            <tr>
+                <th scope="col">
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=id&sortDirection=asc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                            class="bi bi-arrow-down"></i></a>
+
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=id&sortDirection=desc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                            class="bi bi-arrow-up"></i></a>
+                </th>
+                <th scope="col">
+                    <!--<a th:href="@{'/reports/page/1/' + ${pageSize} + '?sortField=patientFirstName&sortDirection=asc'}"><i class="bi bi-arrow-down"></i></a>-->
+                    Patient First Name
+                    <!--<a th:href="@{'/reports/page/1/' + ${pageSize} + '?sortField=patientFirtsName&sortDirection=desc'}"><i class="bi bi-arrow-up"></i></a>-->
+                </th>
+                <th scope="col">
+                    Patient Last Name
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=patientLastName&sortDirection=asc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                            class="bi bi-arrow-down"></i></a>
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=patientLastName&sortDirection=desc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                            class="bi bi-arrow-up"></i></a>
+                </th>
+                <th scope="col">
+                    Patient ID
+                </th>
+                <th scope="col">
+                    Diagnosis Title
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=diagnosisTitle&sortDirection=asc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                            class="bi bi-arrow-down"></i></a>
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=diagnosisTitle&sortDirection=desc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                            class="bi bi-arrow-up"></i></a>
+                </th>
+                <th scope="col"> Diagnosis Detail</th>
+                <th scope="col">
+                    Date of Issue
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=dateOfIssue&sortDirection=asc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                            class="bi bi-arrow-down"></i></a>
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=dateOfIssue&sortDirection=desc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                            class="bi bi-arrow-up"></i></a>
+                </th>
+                <th scope="col"> Lab Worker Hospital ID</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+
+
+            <tbody>
+
+            <tr th:each="report: ${reportDTOS}">
+
+                <th scope="row" th:text="${report.id}"></th>
+                <th scope="row" th:text="${report.patientFirstName}"></th>
+                <th scope="row" th:text="${report.patientLastName}"></th>
+                <th scope="row" th:text="${report.patientIdentityNumber}"></th>
+                <th scope="row" th:text="${report.diagnosisTitle}"></th>
+                <th scope="row" th:text="${report.diagnosisDetail}"></th>
+                <th scope="row" th:text="${report.dateOfIssue}"></th>
+                <th scope="row" th:if="${report.labWorker != null}"
+                    th:text="${report.labWorker.hospitalIdentityNumber}"></th>
+
+                <th scope="row">
+                    <a th:href="@{/reports/update/{id}(id = ${report.id})}"
+                       class="btn btn-primary"><i class="bi bi-tools"> Update</i></a>
+                    <br>
+                    <a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/reports/delete/{id}(id = ${report.id})}"
+                       class="btn btn-danger"><i class="bi bi-person-dash-fill"> Delete</i></a>
+                    <a th:href="@{/reports/get/{id}(id = ${report.id})}"
+                       class="btn btn-info"><i class="bi bi-search"> Info</i></a>
+                </th>
+
+            </tr>
+            </tbody>
+        </table>
+
+
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center" th:if="${totalPages > 1}">
+
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage != 1}"
+                       th:href="@{'/reports/page/' + ${1} + '/' + ${pageSize} + '?sortField=' + ${sortField} + '&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword} + '&Search=Search'}">
+                        <i class="bi bi-skip-backward-fill"></i> </a>
+                    <a class="page-link disabled" th:if="${currentPage == 1}"> <i class="bi bi-skip-backward-fill"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage != 1}"
+                       th:href="@{'/reports/page/' + ${currentPage - 1} + '/' + ${pageSize} + '?sortField=' + ${sortField} + '&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword} + '&Search=Search'}">
+                        <i class="bi bi-caret-left-fill"></i> </a>
+                    <a class="page-link disabled" th:if="${currentPage == 1}"> <i class="bi bi-caret-left-fill"></i>
+                    </a>
+                </li>
+                <li th:each="i: ${#numbers.sequence(1,totalPages)}">
+                    <a class="page-link" th:if="${currentPage != i}"
+                       th:href="@{'/reports/page/' + ${i} + '/' + ${pageSize} + '?sortField=' + ${sortField} + '&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword} + '&Search=Search'}">[[${i}]]</a>
+                    <a class="page-link disabled" th:if="${currentPage == i}">[[${i}]]</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage < totalPages}"
+                       th:href="@{'/reports/page/' + ${currentPage + 1} + '/' + ${pageSize} + '?sortField=' + ${sortField} + '&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword} + '&Search=Search'}">
+                        <i class="bi bi-caret-right-fill"></i> </a>
+                    <a class="page-link disabled" th:if="${currentPage == totalPages}"> <i
+                            class="bi bi-caret-right-fill"></i> </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage < totalPages}"
+                       th:href="@{'/reports/page/' + ${totalPages} + '/' + ${pageSize} + '?sortField=' + ${sortField} + '&sortDirection=' + ${reverseSortDirection} + '&keyword=' + ${keyword} + '&Search=Search'}">
+                        <i class="bi bi-skip-forward-fill"></i> </a>
+                    <a class="page-link disabled" th:if="${currentPage == totalPages}"> <i
+                            class="bi bi-skip-forward-fill"></i> </a>
+                </li>
+            </ul>
+
+        </nav>
+        Lab Workers: [[${totalElements}]] /
+        Total Page: [[${totalPages}]] /
+        Current Page: [[${currentPage}]] /
+        Sort Field: [[${sortField}]] /
+        Page Size: [[${pageSize}]]
+    </div>
+
+
+    <br>
+    <br>
+    <br>
+
+</div>
+
+</body>
+</html>

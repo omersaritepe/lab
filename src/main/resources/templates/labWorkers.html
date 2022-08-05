@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Lab Workers</title>
+
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+    <script type="text/javascript" th:src="@{/js/action.js}"></script>
+</head>
+<body>
+
+
+<div class="container text-center">
+
+    <div th:replace="components :: header"></div>
+
+    <a type="button" class="btn btn-success" th:href="@{/labWorkers/save}">
+        <i class="bi bi-person-plus-fill"> Save</i>
+    </a>
+
+    <div class="table-responsive-md mt-5">
+        <table class="table table-dark table-striped">
+            <thead class="bg-dark">
+            <tr>
+                <th scope="col">
+                    <a th:href="@{'/labWorkers/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=id&sortDirection=asc'}"><i
+                            class="bi bi-arrow-down"></i></a>
+                    #
+                    <a th:href="@{'/labWorkers/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=id&sortDirection=desc'}"><i
+                            class="bi bi-arrow-up"></i></a>
+                </th>
+                <th scope="col">
+                    <a th:href="@{'/labWorkers/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=firstName&sortDirection=asc'}"><i
+                            class="bi bi-arrow-down"></i></a>
+                    First Name
+                    <a th:href="@{'/labWorkers/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=firstName&sortDirection=desc'}"><i
+                            class="bi bi-arrow-up"></i></a>
+                </th>
+                <th scope="col">
+                    <a th:href="@{'/labWorkers/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=lastName&sortDirection=asc'}"><i
+                            class="bi bi-arrow-down"></i></a>
+                    Last Name
+                    <a th:href="@{'/labWorkers/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=lastName&sortDirection=desc'}"><i
+                            class="bi bi-arrow-up"></i></a>
+                </th>
+                <th scope="col">
+                    Hospital ID
+                </th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="labWorker: ${listLabWorkers}">
+                <th scope="row" th:text="${labWorker.id}"></th>
+                <th scope="row" th:text="${labWorker.firstName}"></th>
+                <th scope="row" th:text="${labWorker.lastName}"></th>
+                <th scope="row" th:text="${labWorker.hospitalIdentityNumber}"></th>
+                <th scope="row">
+                    <a th:href="@{/labWorkers/update/{id}(id = ${labWorker.id})}"
+                       class="btn btn-primary"><i class="bi bi-tools"> Update</i></a>
+                    <a sec:authorize="hasAnyAuthority('ADMIN')"
+                       th:href="@{/labWorkers/delete/{id}(id = ${labWorker.id})}"
+                       class="btn btn-danger"><i class="bi bi-person-dash-fill"> Delete</i></a>
+                    <a th:href="@{/labWorkers/get/{id}(id = ${labWorker.id})}"
+                       class="btn btn-info"><i class="bi bi-search"> Info</i></a>
+                </th>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center" th:if="${totalPages > 1}">
+
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage != 1}"
+                       th:href="@{'/labWorkers/page/' + ${1} + '/' + ${pageSize} + '?sortField=' + ${sortField} +'&sortDirection=' + ${reverseSortDirection}}">
+                        <i class="bi bi-skip-backward-fill"></i> </a>
+                    <a class="page-link disabled" th:if="${currentPage == 1}"> <i class="bi bi-skip-backward-fill"></i>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage != 1}"
+                       th:href="@{'/labWorkers/page/' + ${currentPage - 1} + '/' + ${pageSize} + '?sortField=' + ${sortField} +'&sortDirection=' + ${reverseSortDirection}}">
+                        <i class="bi bi-caret-left-fill"></i> </a>
+                    <a class="page-link disabled" th:if="${currentPage == 1}"> <i class="bi bi-caret-left-fill"></i>
+                    </a>
+                </li>
+                <li th:each="i: ${#numbers.sequence(1,totalPages)}">
+                    <a class="page-link" th:if="${currentPage != i}"
+                       th:href="@{'/labWorkers/page/' + ${i} + '/' + ${pageSize} + '?sortField=' + ${sortField} +'&sortDirection=' + ${reverseSortDirection}}">[[${i}]]</a>
+                    <a class="page-link disabled" th:if="${currentPage == i}">[[${i}]]</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage < totalPages}"
+                       th:href="@{'/labWorkers/page/' + ${currentPage + 1} + '/' + ${pageSize} + '?sortField=' + ${sortField} +'&sortDirection=' + ${reverseSortDirection}}">
+                        <i class="bi bi-caret-right-fill"></i> </a>
+                    <a class="page-link disabled" th:if="${currentPage == totalPages}"> <i
+                            class="bi bi-caret-right-fill"></i> </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" th:if="${currentPage < totalPages}"
+                       th:href="@{'/labWorkers/page/' + ${totalPages} + '/' + ${pageSize} + '?sortField=' + ${sortField} +'&sortDirection=' + ${reverseSortDirection}} ">
+                        <i class="bi bi-skip-forward-fill"></i> </a>
+                    <a class="page-link disabled" th:if="${currentPage == totalPages}"> <i
+                            class="bi bi-skip-forward-fill"></i> </a>
+                </li>
+            </ul>
+
+            <!--
+            <label for="customRange3" class="form-label">Example range</label>
+            <input type="range" class="form-range" min="5" max="25" step="5" id="customRange3" onchange="updateTextInput(this.value)">
+            <input type="number" id="textInput" value="">
+            <a type="button" class="btn btn-success" th:href="@{'/labWorkers/page/2/' + ${textInput}}">
+              <i class="bi bi-arrow-counterclockwise"></i>
+            </a>
+            -->
+
+
+        </nav>
+    </div>
+    Lab Workers: [[${totalElements}]] /
+    Total Page: [[${totalPages}]] /
+    Current Page: [[${currentPage}]] /
+    Sort Field: [[${sortField}]] /
+    Page Size: [[${pageSize}]]
+
+</div>
+
+</body>
+</html>

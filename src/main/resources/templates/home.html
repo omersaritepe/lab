@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      >
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+</head>
+<body>
+<div class="container text-center">
+
+    <div th:replace="components :: header"></div>
+
+
+
+    <div class="btn-group mt-5">
+        <a class="btn btn-success" th:href="@{/labWorkers}" >Lab Workers</a>
+        <a class="btn btn-info" th:href="@{/reports}" >Reports</a>
+    </div>
+</div>
+
+
+</body>
+</html>
