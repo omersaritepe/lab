@@ -92,7 +92,7 @@
                     <a th:href="@{/reports/update/{id}(id = ${report.id})}"
                        class="btn btn-primary"><i class="bi bi-tools"> Update</i></a>
                     <br>
-                    <a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/reports/delete/{id}(id = ${report.id})}"
+                    <a sec:authorize="hasAnyAuthority('ROLE_ADMIN')" th:href="@{/reports/delete/{id}(id = ${report.id})}"
                        class="btn btn-danger"><i class="bi bi-person-dash-fill"> Delete</i></a>
                     <a th:href="@{/reports/get/{id}(id = ${report.id})}"
                        class="btn btn-info"><i class="bi bi-search"> Info</i></a>

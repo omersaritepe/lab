@@ -62,7 +62,7 @@
                 <th scope="row">
                     <a th:href="@{/labWorkers/update/{id}(id = ${labWorker.id})}"
                        class="btn btn-primary"><i class="bi bi-tools"> Update</i></a>
-                    <a sec:authorize="hasAnyAuthority('ADMIN')"
+                    <a sec:authorize="hasAnyAuthority('ROLE_ADMIN')"
                        th:href="@{/labWorkers/delete/{id}(id = ${labWorker.id})}"
                        class="btn btn-danger"><i class="bi bi-person-dash-fill"> Delete</i></a>
                     <a th:href="@{/labWorkers/get/{id}(id = ${labWorker.id})}"
