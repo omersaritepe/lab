@@ -24,7 +24,9 @@ Open terminal and enter the lab folder we downloaded
 #### Way-1
 
 <pre> mvn install </pre>
-and come to position lab/target <strong>(cd target)</strong>  
+come to position lab/target
+<pre> cd target </pre>
+and
 <pre> java -jar lab-0.0.1-SNAPSHOT.jar </pre>
 
 The application runs from http://localhost:8080/
