@@ -10,7 +10,7 @@ Postgresql is used as the database.
 
 Open src/main/resources/application.properties change 
 <ul>
-    <li>spring.datasource.url</li>
+    <li>spring.datasource.url</li> (Create a database named lab or replace it with an existing database name)
     <li>spring.datasource.username</li>
     <li>spring.datasource.password</li>
 </ul>
@@ -19,10 +19,14 @@ Open src/main/resources/application.properties change
 
 The project is created with Maven. There are 2 different ways to run your app without IDE.
 
+Open terminal and enter the lab folder we downloaded
+
 #### Way-1
-Open terminal 
+
 <pre> mvn install </pre>
-and come to position lab/target  
+come to position lab/target
+<pre> cd target </pre>
+and
 <pre> java -jar lab-0.0.1-SNAPSHOT.jar </pre>
 
 The application runs from http://localhost:8080/
