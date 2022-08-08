@@ -13,12 +13,12 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class IndexController {
+public class LabWorkerController {
 
     private final LabWorkerService labWorkerService;
     private final ReportLabWorkerDTOMapper reportLabWorkerDTOMapper;
 
-    public IndexController(LabWorkerService labWorkerService, ReportLabWorkerDTOMapper reportLabWorkerDTOMapper) {
+    public LabWorkerController(LabWorkerService labWorkerService, ReportLabWorkerDTOMapper reportLabWorkerDTOMapper) {
         this.labWorkerService = labWorkerService;
         this.reportLabWorkerDTOMapper = reportLabWorkerDTOMapper;
     }

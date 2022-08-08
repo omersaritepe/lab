@@ -1,7 +1,6 @@
 package com.saritepe.lab.service;
 
 import com.saritepe.lab.mapper.dto.ReportDTOMapper;
-import com.saritepe.lab.mapper.dto.ReportLabWorkerDTOMapper;
 import com.saritepe.lab.mapper.entity.ReportMapper;
 import com.saritepe.lab.model.dto.ReportDTO;
 import com.saritepe.lab.model.entity.Report;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,8 +32,6 @@ public class ReportService {
     }
 
     public ReportDTO save(ReportDTO reportDTO) {
-
-
 
         return reportDTOMapper.fromReport(reportRepository.save(reportMapper.fromDTO(reportDTO)));
     }

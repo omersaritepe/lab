@@ -1,38 +1,25 @@
 package com.saritepe.lab.controller;
 
-import com.saritepe.lab.model.dto.LabWorkerDTO;
 import com.saritepe.lab.model.dto.ReportDTO;
 import com.saritepe.lab.service.ReportService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.awt.*;
 import java.util.List;
 
 @Controller
-public class RepController {
+public class ReportController {
 
     private final ReportService reportService;
 
-    public RepController(ReportService reportService) {
+    public ReportController(ReportService reportService) {
         this.reportService = reportService;
     }
 
-
-    /*
     @GetMapping("/reports")
     public String findAll(Model model) {
-        model.addAttribute("reportDTO", reportService.findAll());
-        return "reports";
-    }
-
-     */
-
-    @GetMapping("/reports")
-    public String findAll(Model model/*, @RequestParam("pageSize") int pageSize*/) {
         return findPaginated(1, 5, "patientFirstName", "asc", "", model);
     }
 
