@@ -32,26 +32,18 @@
             <thead class="bg-dark">
             <tr>
                 <th scope="col">
-                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=id&sortDirection=asc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=fileNumber&sortDirection=asc&keyword=' + ${keyword} + '&Search=Search'}"><i
                             class="bi bi-arrow-down"></i></a>
-
-                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=id&sortDirection=desc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                    File Number
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=fileNumber&sortDirection=desc&keyword=' + ${keyword} + '&Search=Search'}"><i
                             class="bi bi-arrow-up"></i></a>
                 </th>
                 <th scope="col">
-                    <!--<a th:href="@{'/reports/page/1/' + ${pageSize} + '?sortField=patientFirstName&sortDirection=asc'}"><i class="bi bi-arrow-down"></i></a>-->
-                    Patient First Name
-                    <!--<a th:href="@{'/reports/page/1/' + ${pageSize} + '?sortField=patientFirtsName&sortDirection=desc'}"><i class="bi bi-arrow-up"></i></a>-->
-                </th>
-                <th scope="col">
-                    Patient Last Name
-                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=patientLastName&sortDirection=asc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                    Patient Full Name
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=patientFirstName&sortDirection=asc&keyword=' + ${keyword} + '&Search=Search'}"><i
                             class="bi bi-arrow-down"></i></a>
-                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=patientLastName&sortDirection=desc&keyword=' + ${keyword} + '&Search=Search'}"><i
+                    <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=patientFirstName&sortDirection=desc&keyword=' + ${keyword} + '&Search=Search'}"><i
                             class="bi bi-arrow-up"></i></a>
-                </th>
-                <th scope="col">
-                    Patient ID
                 </th>
                 <th scope="col">
                     Diagnosis Title
@@ -60,7 +52,6 @@
                     <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=diagnosisTitle&sortDirection=desc&keyword=' + ${keyword} + '&Search=Search'}"><i
                             class="bi bi-arrow-up"></i></a>
                 </th>
-                <th scope="col"> Diagnosis Detail</th>
                 <th scope="col">
                     Date of Issue
                     <a th:href="@{'/reports/page/' + ${currentPage} + '/' + ${pageSize} + '?sortField=dateOfIssue&sortDirection=asc&keyword=' + ${keyword} + '&Search=Search'}"><i
@@ -78,12 +69,9 @@
 
             <tr th:each="report: ${reportDTOS}">
 
-                <th scope="row" th:text="${report.id}"></th>
-                <th scope="row" th:text="${report.patientFirstName}"></th>
-                <th scope="row" th:text="${report.patientLastName}"></th>
-                <th scope="row" th:text="${report.patientIdentityNumber}"></th>
+                <th scope="row" th:text="${report.fileNumber}"></th>
+                <th scope="row" th:text="${report.patientFirstName} + ' ' + ${report.patientLastName}"></th>
                 <th scope="row" th:text="${report.diagnosisTitle}"></th>
-                <th scope="row" th:text="${report.diagnosisDetail}"></th>
                 <th scope="row" th:text="${report.dateOfIssue}"></th>
                 <th scope="row" th:if="${report.labWorker != null}"
                     th:text="${report.labWorker.hospitalIdentityNumber}"></th>

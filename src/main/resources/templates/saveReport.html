@@ -5,6 +5,7 @@
     <title>Save Report</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/form.css}" rel="stylesheet">
 
 </head>
 <body>
@@ -18,94 +19,87 @@
         </div>
         <div class="card-body">
 
-            <form class="needs-validation form-inline" novalidate th:action="@{/reports/s}" th:object="${reportDTO}"
-                  method="post">
+            <form class="needs-validation form-inline" th:action="@{/reports/s}" th:object="${reportDTO}"
+                  method="post" enctype="multipart/form-data">
 
                 <div class="row">
                     <div class="col">
                         <label for="fileNumber" class="form-label">File Number</label>
-                        <input type="number" class="form-control" id="fileNumber" placeholder="File Number"
+                        <input type="text" class="form-control" id="fileNumber" placeholder="File Number"
                                th:field="*{fileNumber}">
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
+                        <ul>
+                            <li th:each="err : ${#fields.errors('fileNumber')}" th:text="${err}" class="error" />
+                        </ul>
                     </div>
                     <div class="col">
                         <label for="patientIdentityNumber" class="form-label">Patient Identity Number</label>
                         <input type="number" class="form-control" id="patientIdentityNumber"
-                               placeholder="Patient Identity Number" th:field="*{patientIdentityNumber}">
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
+                               placeholder="Patient Identity Number" maxlength="11"
+                               th:field="*{patientIdentityNumber}">
+                        <ul>
+                            <li th:each="err : ${#fields.errors('patientIdentityNumber')}" th:text="${err}" class="error" />
+                        </ul>
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row mt-3">
                     <div class="col">
                         <label for="patientFirstName" class="form-label">Patient First Name</label>
                         <input type="text" class="form-control" id="patientFirstName" placeholder="Patient First Name"
                                th:field="*{patientFirstName}">
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
+                        <ul>
+                            <li th:each="err : ${#fields.errors('patientFirstName')}" th:text="${err}" class="error" />
+                        </ul>
                     </div>
                     <div class="col">
                         <label for="patientLastName" class="form-label">Patient Last Name</label>
                         <input type="text" class="form-control" id="patientLastName" placeholder="Patient Last Name"
                                th:field="*{patientLastName}">
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
+                        <ul>
+                            <li th:each="err : ${#fields.errors('patientLastName')}" th:text="${err}" class="error" />
+                        </ul>
                     </div>
                 </div>
 
 
 
-                <div class="col-12 mb-4">
+                <div class="col-12 mt-3">
                     <label for="diagnosisTitle" class="form-label">Diagnosis Title</label>
                     <input type="text" class="form-control" id="diagnosisTitle" placeholder="Diagnosis Title"
                            th:field="*{diagnosisTitle}">
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
                 </div>
-                <div class="col-12 mb-4">
+                <div class="col-12 mt-3">
                     <label for="diagnosisDetail" class="form-label">Diagnosis Detail</label>
                     <textarea type="" class="form-control" id="diagnosisDetail" placeholder="Diagnosis Detail"
                            th:field="*{diagnosisDetail}"></textarea>
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
                 </div>
 
-                <div class="col-12 mb-4">
+                <div class="col-12 mt-3">
                     <label for="dateOfIssue" class="form-label">Date of Issue</label>
                     <input type="date" class="form-control" id="dateOfIssue" th:field="*{dateOfIssue}">
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
+
                 </div>
 
-                <div class="col-12 mb-4">
-                    <label for="labWorkerHospitalIdentityNumber" class="form-label">Lab Worker ID</label>
+                <div class="col-12 mt-3">
+                    <label for="labWorkerHospitalIdentityNumber" class="form-label">Lab Worker Hospital ID</label>
                     <input type="text" class="form-control" id="labWorkerHospitalIdentityNumber"
-                           placeholder="Lab Worker ID" th:field="*{labWorker.id}">
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
+                           placeholder="Lab Worker Hospital ID" maxlength="7"
+                           th:field="*{labWorker.hospitalIdentityNumber}">
                 </div>
 
-                <div class="mb-3">
-                    <label for="formFile" class="form-label">Image</label>
-                    <input class="form-control" type="file" id="formFile" th:file="${reportDTO.image}">
+                <div class="col-12 mt-3">
+                    <label for="file" class="form-label">Image</label>
+                    <input type="file" name="file" class="form-control" id="file"
+                           accept="image/*">
+                    <ul>
+                        <li th:each="err : ${#fields.errors('image')}" th:text="${err}" class="error" />
+                    </ul>
                 </div>
 
-                <div class="col-12 mb-4">
+                <div class="col-12 mt-3 mb-3">
                     <button class="btn btn-success" type="submit">Submit form</button>
                 </div>
-                <br>
             </form>
-
             <div class="card-footer">
                 <h2>Save</h2>
             </div>

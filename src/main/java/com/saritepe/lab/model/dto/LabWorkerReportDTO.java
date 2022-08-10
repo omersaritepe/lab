@@ -1,11 +1,13 @@
 package com.saritepe.lab.model.dto;
 
+import lombok.Data;
 import lombok.Getter;
 
+import javax.persistence.Transient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Getter
+@Data
 public class LabWorkerReportDTO {
 
     private Long id;
@@ -16,7 +18,14 @@ public class LabWorkerReportDTO {
     private String diagnosisTitle;
     private String diagnosisDetail;
     private String dateOfIssue;
-    private byte[] image;
+    private String image;
+
+    @Transient
+    public  String getReportImagePath() {
+        if (image == null || id == null) return null;
+        System.out.println("/report-images/" + id + "/" + image);
+        return "/report-images/" + id + "/" + image;
+    }
 
 
     public static final class LabWorkerReportDTOBuilder {
@@ -28,7 +37,7 @@ public class LabWorkerReportDTO {
         private String diagnosisTitle;
         private String diagnosisDetail;
         private String dateOfIssue;
-        private byte[] image;
+        private String image;
 
         private LabWorkerReportDTOBuilder() {
         }
@@ -77,22 +86,22 @@ public class LabWorkerReportDTO {
             return this;
         }
 
-        public LabWorkerReportDTOBuilder image(byte[] image) {
+        public LabWorkerReportDTOBuilder image(String image) {
             this.image = image;
             return this;
         }
 
         public LabWorkerReportDTO build() {
             LabWorkerReportDTO labWorkerReportDTO = new LabWorkerReportDTO();
-            labWorkerReportDTO.fileNumber = this.fileNumber;
             labWorkerReportDTO.image = this.image;
-            labWorkerReportDTO.diagnosisDetail = this.diagnosisDetail;
+            labWorkerReportDTO.fileNumber = this.fileNumber;
             labWorkerReportDTO.patientLastName = this.patientLastName;
             labWorkerReportDTO.id = this.id;
-            labWorkerReportDTO.patientFirstName = this.patientFirstName;
-            labWorkerReportDTO.patientIdentityNumber = this.patientIdentityNumber;
             labWorkerReportDTO.dateOfIssue = this.dateOfIssue;
+            labWorkerReportDTO.patientFirstName = this.patientFirstName;
             labWorkerReportDTO.diagnosisTitle = this.diagnosisTitle;
+            labWorkerReportDTO.patientIdentityNumber = this.patientIdentityNumber;
+            labWorkerReportDTO.diagnosisDetail = this.diagnosisDetail;
             return labWorkerReportDTO;
         }
     }

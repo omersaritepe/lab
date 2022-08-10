@@ -7,6 +7,7 @@ import com.saritepe.lab.service.LabWorkerService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -38,7 +39,10 @@ public class LabWorkerController {
     }
 
     @PostMapping("/labWorkers")
-    public String saveLabWorker(@ModelAttribute("reportLabWorkerDTO") ReportLabWorkerDTO reportLabWorkerDTO) {
+    public String saveLabWorker(@Valid @ModelAttribute("reportLabWorkerDTO") ReportLabWorkerDTO reportLabWorkerDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            return "saveLabWorker";
+        }
         labWorkerService.save(reportLabWorkerDTO);
         return "redirect:/labWorkers";
     }
@@ -55,7 +59,11 @@ public class LabWorkerController {
 
     @PostMapping("/labWorkers/{id}")
     public String saveLabWorker(@PathVariable("id") Long id,
-                                @Valid @ModelAttribute("reportLabWorkerDTO") ReportLabWorkerDTO reportLabWorkerDTO) {
+                                @Valid @ModelAttribute("reportLabWorkerDTO") ReportLabWorkerDTO reportLabWorkerDTO,
+                                BindingResult result) {
+        if (result.hasErrors()) {
+            return "updateLabWorker";
+        }
         labWorkerService.update(reportLabWorkerDTO, id);
         return "redirect:/labWorkers";
     }

@@ -5,8 +5,18 @@ import com.saritepe.lab.service.ReportService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 @Controller
@@ -20,7 +30,7 @@ public class ReportController {
 
     @GetMapping("/reports")
     public String findAll(Model model) {
-        return findPaginated(1, 5, "patientFirstName", "asc", "", model);
+        return findPaginated(1, 5, "fileNumber", "asc", "", model);
     }
 
 
@@ -32,8 +42,51 @@ public class ReportController {
     }
 
     @PostMapping("/reports/s")
-    public String saveReport(@ModelAttribute("reportDTO") ReportDTO reportDTO) {
-        reportService.save(reportDTO);
+    public String saveReport(@Valid @ModelAttribute("reportDTO") ReportDTO reportDTO,
+                             BindingResult result,
+                             @RequestParam("file") MultipartFile file) throws IOException {
+        if (result.hasErrors()) {
+            return "saveReport";
+        }
+
+        if (file.isEmpty()) {
+            reportService.save(reportDTO);
+            return "redirect:/reports";
+        }
+
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        reportDTO = ReportDTO.ReportDTOBuilder.aReportDTOWith()
+                .id(reportDTO.getId())
+                .fileNumber(reportDTO.getFileNumber())
+                .patientFirstName(reportDTO.getPatientFirstName())
+                .patientLastName(reportDTO.getPatientLastName())
+                .patientIdentityNumber(reportDTO.getPatientIdentityNumber())
+                .diagnosisTitle(reportDTO.getDiagnosisTitle())
+                .diagnosisDetail(reportDTO.getDiagnosisDetail())
+                .dateOfIssue(reportDTO.getDateOfIssue())
+                .image(fileName)
+                .labWorker(reportDTO.getLabWorker())
+                .build();
+
+        ReportDTO savedReportDTO = reportService.save(reportDTO);
+
+        String uploadDir = "./report-images/" + savedReportDTO.getId();
+        // String uploadDir = "./src/main/resources/static/report-images/" + savedReportDTO.getId();
+
+        Path uploadPath = Paths.get(uploadDir);
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        try (InputStream inputStream = file.getInputStream()){
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new IOException("Could not saved uploaded file: " + fileName);
+        }
+
+
         return "redirect:/reports";
     }
 
@@ -45,15 +98,64 @@ public class ReportController {
     }
 
     @PostMapping("/reports/{id}")
-    public String updateReport(@ModelAttribute("reportDTO") ReportDTO reportDTO, @PathVariable("id") Long id) {
-        reportService.update(reportDTO, id);
+    public String updateReport(@Valid @ModelAttribute("reportDTO") ReportDTO reportDTO,
+                               @PathVariable("id") Long id,
+                               BindingResult result,
+                               @RequestParam("file") MultipartFile file) throws IOException {
+        if (result.hasErrors()) {
+            return "updateReport";
+        }
+        if (file.isEmpty()) {
+            reportService.update(reportDTO, id);
+            return "redirect:/reports";
+        }
+
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        reportDTO = ReportDTO.ReportDTOBuilder.aReportDTOWith()
+                .id(reportDTO.getId())
+                .fileNumber(reportDTO.getFileNumber())
+                .patientFirstName(reportDTO.getPatientFirstName())
+                .patientLastName(reportDTO.getPatientLastName())
+                .patientIdentityNumber(reportDTO.getPatientIdentityNumber())
+                .diagnosisTitle(reportDTO.getDiagnosisTitle())
+                .diagnosisDetail(reportDTO.getDiagnosisDetail())
+                .dateOfIssue(reportDTO.getDateOfIssue())
+                .image(fileName)
+                .labWorker(reportDTO.getLabWorker())
+                .build();
+
+        ReportDTO savedReportDTO = reportService.save(reportDTO);
+
+        String uploadDir = "./report-images/" + savedReportDTO.getId();
+        // String uploadDir = "./src/main/resources/static/report-images/" + savedReportDTO.getId();
+
+        Path uploadPath = Paths.get(uploadDir);
+
+        if (!Files.exists(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
+
+        try (InputStream inputStream = file.getInputStream()){
+            Path filePath = uploadPath.resolve(fileName);
+            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            throw new IOException("Could not saved uploaded file: " + fileName);
+        }
+
+
         return "redirect:/reports";
+
     }
 
     /** Delete */
     @GetMapping("/reports/delete/{id}")
-    public String deleteReport(@PathVariable("id") Long id) {
+    public String deleteReport(@PathVariable("id") Long id) throws IOException {
         reportService.deleteById(id);
+/*
+        String deleteDir = "./report-images/" + id;
+        Path deletePath = Paths.get(deleteDir);
+        Files.delete(deletePath);
+ */
         return "redirect:/reports";
     }
 
@@ -65,7 +167,6 @@ public class ReportController {
         model.addAttribute("reportDTO", reportDTO);
         return "infoReport";
     }
-
 
     @GetMapping("/reports/page/{pageNo}/{pageSize}")
     public String findPaginated(@PathVariable("pageNo") int pageNo
@@ -92,5 +193,4 @@ public class ReportController {
 
         return "reports";
     }
-
 }

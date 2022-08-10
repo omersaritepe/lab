@@ -1,9 +1,6 @@
 package com.saritepe.lab.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -13,6 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Report {
@@ -30,24 +28,23 @@ public class Report {
 
     private String dateOfIssue;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    private byte[] image;
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "lab_worker_id")
     private LabWorker labWorker;
 
+
     public static final class ReportBuilder {
         private Long id;
-        private int fileNumber;
+        private @NotEmpty int fileNumber;
         private String patientFirstName;
         private String patientLastName;
         private String patientIdentityNumber;
         private String diagnosisTitle;
         private String diagnosisDetail;
         private String dateOfIssue;
-        private byte[] image;
+        private String image;
         private LabWorker labWorker;
 
         private ReportBuilder() {
@@ -97,7 +94,7 @@ public class Report {
             return this;
         }
 
-        public ReportBuilder image(byte[] image) {
+        public ReportBuilder image(String image) {
             this.image = image;
             return this;
         }

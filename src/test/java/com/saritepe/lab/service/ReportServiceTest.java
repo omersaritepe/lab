@@ -24,15 +24,18 @@ class ReportServiceTest {
 
     private ReportService service;
     private ReportRepository reportRepository;
+
+    private LabWorkerService labWorkerService;
     private ReportMapper reportMapper;
     private ReportDTOMapper reportDTOMapper;
 
     @BeforeEach
     void setUp() {
         reportRepository = mock(ReportRepository.class);
+        labWorkerService = mock(LabWorkerService.class);
         reportMapper = mock(ReportMapper.class);
         reportDTOMapper = mock(ReportDTOMapper.class);
-        service = new ReportService(reportRepository, reportMapper, reportDTOMapper);
+        service = new ReportService(reportRepository, labWorkerService, reportMapper, reportDTOMapper);
 
     }
 
@@ -77,6 +80,7 @@ class ReportServiceTest {
                 .labWorker(labWorker)
                 .build();
 
+        Mockito.when(labWorkerService.findByHospitalIdentityNumber("1234567")).thenReturn(reportLabWorkerDTO);
         Mockito.when(reportMapper.fromDTO(reportDTO)).thenReturn(report);
         Mockito.when(reportRepository.save(report)).thenReturn(report);
         Mockito.when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
@@ -86,6 +90,7 @@ class ReportServiceTest {
 
         Assert.assertEquals(resultReportDTO, reportDTO);
 
+        Mockito.verify(labWorkerService).findByHospitalIdentityNumber("1234567");
         Mockito.verify(reportMapper).fromDTO(reportDTO);
         Mockito.verify(reportRepository).save(report);
         Mockito.verify(reportDTOMapper).fromReport(report);

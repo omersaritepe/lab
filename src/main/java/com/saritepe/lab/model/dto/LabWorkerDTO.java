@@ -1,12 +1,13 @@
 package com.saritepe.lab.model.dto;
 
 import com.saritepe.lab.model.entity.Report;
+import lombok.Data;
 import lombok.Getter;
 
 import java.util.Set;
 import java.util.function.Supplier;
 
-@Getter
+@Data
 public class LabWorkerDTO {
     private Long id;
     private String hospitalIdentityNumber;

@@ -1,9 +1,6 @@
 package com.saritepe.lab.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -12,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LabWorker {
@@ -20,7 +18,9 @@ public class LabWorker {
     private Long id;
 
     @Column(nullable = false, unique = true, length = 7)
+    @NotEmpty(message = "Lab Worker's name cannot be empty.")
     private String hospitalIdentityNumber;
+
     private String firstName;
     private String lastName;
 

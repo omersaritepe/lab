@@ -13,7 +13,8 @@
   <div th:replace="components :: header"></div>
 
   <div class="card text-center" >
-    <img th:src="@{/images/patient.png}" class="card-img-top rounded mx-auto" th:alt="${reportDTO.patientFirstName}" style="width: 225px" height="225">
+    <img th:if="${reportDTO.image == null}" th:src="@{/images/patient.png}" class="card-img-top rounded mx-auto" th:alt="${reportDTO.patientFirstName}" style="width: 225px">
+    <img th:if="${reportDTO.image != null}" th:src="@{${reportDTO.getReportImagePath()}}" class="card-img-top rounded mx-auto" th:alt="${reportDTO.patientFirstName}" style="width: 225px">
     <div class="card-header">
       File Number: [[${reportDTO.fileNumber}]]
     </div>
@@ -26,11 +27,11 @@
       <div th:if="${reportDTO.labWorker != null}">
         <h4>Lab Worker</h4>
         <h6>Lab Worker Full Name: [[${reportDTO.labWorker.firstName + ' ' + reportDTO.labWorker.lastName}]]</h6>
-        <a th:href="@{/labWorkers/get/{id}(id = ${reportDTO.labWorker.id})}" class="btn btn-primary">Detail</a>
+        <a th:href="@{/labWorkers/get/{id}(id = ${reportDTO.labWorker.id})}" class="btn btn-info">Detail</a>
       </div>
       <hr class="my-4">
       <a th:href="@{/reports/update/{id}(id = ${reportDTO.id})}" class="btn btn-primary">Edit</a>
-      <a th:href="@{/reports}" class="btn btn-primary">All Reports</a>
+      <a th:href="@{/reports}" class="btn btn-warning">All Reports</a>
     </div>
     <div class="card-footer text-muted">
       Date of Issue: [[${reportDTO.dateOfIssue}]]

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>500</title>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+</head>
+<body>
+<div class="container text-center">
+  <div th:replace="components :: header"></div>
+
+  <h1>Sorry, 500</h1>
+  <a th:href="@{/}" class="btn btn-info">Home</a>
+</div>
+
+
+</body>
+</html>

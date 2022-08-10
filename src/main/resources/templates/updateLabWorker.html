@@ -5,6 +5,7 @@
     <title>Update Lab Worker</title>
 
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/form.css}" rel="stylesheet">
 
 </head>
 <body>
@@ -17,41 +18,50 @@
         <div class="col-3"></div>
         <div class="col-6">
 
-            <div class="card" >
+            <div class="card">
                 <div class="card-header">
                     <h1>Update Lab Worker</h1>
                 </div>
                 <div class="card-body">
 
-                    <form class="needs-validation" novalidate th:action="@{/labWorkers/{id} (id=${reportLabWorkerDTO.id})}" th:object="${reportLabWorkerDTO}" method="post">
+                    <form class="needs-validation" novalidate
+                          th:action="@{/labWorkers/{id} (id=${reportLabWorkerDTO.id})}"
+                          th:object="${reportLabWorkerDTO}" method="post">
+
                         <div class="col-12">
-                            <label for="firstName" class="form-label">First name </label>
-                            <input type="text" class="form-control" id="firstName" placeholder="First Name" th:field="*{firstName}">
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
+                            <label for="firstName" class="form-label">First name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="First Name"
+                                   th:field="*{firstName}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('firstName')}" th:text="${err}" class="error"/>
+                            </ul>
                         </div>
 
                         <div class="col-12">
                             <label for="lastName" class="form-label">Last name</label>
-                            <input type="text" class="form-control" id="lastName" placeholder="Last Name" th:field="*{lastName}">
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
+                            <input type="text" class="form-control" id="lastName" placeholder="Last Name"
+                                   th:field="*{lastName}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('lastName')}" th:text="${err}" class="error"/>
+                            </ul>
                         </div>
 
                         <div class="col-12">
-                            <label for="hospitalIdentityNumber" class="form-label" >Hospital ID</label>
-                            <input type="text" class="form-control" id="hospitalIdentityNumber" placeholder="Hospital ID" th:field="*{hospitalIdentityNumber}">
-                            <div class="valid-feedback">
-                                Looks good!
-                            </div>
+                            <label for="hospitalIdentityNumber" class="form-label">Hospital ID</label>
+                            <input type="text" class="form-control" id="hospitalIdentityNumber"
+                                   placeholder="Hospital ID" maxlength="7"
+                                   th:field="*{hospitalIdentityNumber}">
+                            <ul>
+                                <li th:each="err : ${#fields.errors('hospitalIdentityNumber')}" th:text="${err}"
+                                    class="error"/>
+                            </ul>
                         </div>
-                        <br>
-                        <div class="col-12">
+
+
+                        <div class="col-12 mt-3 mb-3">
                             <button class="btn btn-success" type="submit">Submit form</button>
                         </div>
-                        <br>
+
                     </form>
 
                     <div class="card-footer">
@@ -66,14 +76,6 @@
         </div>
         <div class="col-3"></div>
     </div>
-
-
-
-
-
-
-
-
 
 
 </div>

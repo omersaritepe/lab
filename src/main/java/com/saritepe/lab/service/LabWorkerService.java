@@ -35,7 +35,8 @@ public class LabWorkerService {
     private final ReportLabWorkerDTOMapper reportLabWorkerDTOMapper;
 
     public LabWorkerService(LabWorkerRepository labWorkerRepository,
-                            ReportService reportService, LabWorkerMapper labWorkerMapper,
+                            ReportService reportService,
+                            LabWorkerMapper labWorkerMapper,
                             LabWorkerDTOMapper labWorkerDTOMapper,
                             ReportLabWorkerDTOMapper reportLabWorkerDTOMapper) {
         this.labWorkerRepository = labWorkerRepository;
@@ -57,8 +58,7 @@ public class LabWorkerService {
                 .lastName(reportLabWorkerDTO.getLastName())
                 .build();
 
-        return reportLabWorkerDTOMapper.fromLabWorker(labWorkerRepository.save(labWorkerMapper.fromReportLabWorkerDTO(reportLabWorkerDTO)));
-
+        return reportLabWorkerDTOMapper.fromLabWorker(labWorkerRepository.save(labWorkerMapper.fromReportLabWorkerDTO(resultReportLabWorkerDTO)));
     }
 
     public String deleteById(Long id) {
@@ -107,5 +107,9 @@ public class LabWorkerService {
         Pageable pageable = PageRequest.of(pageNo-1, pageSize, sort);
         Page<LabWorker> labWorkers = labWorkerRepository.findAll(pageable);
         return labWorkers.map(labWorkerDTOMapper::fromLabWorker);
+    }
+
+    public ReportLabWorkerDTO findByHospitalIdentityNumber(String hospitalIdentityNumber) {
+        return reportLabWorkerDTOMapper.fromLabWorker(labWorkerRepository.findByHospitalIdentityNumber(hospitalIdentityNumber));
     }
 }
