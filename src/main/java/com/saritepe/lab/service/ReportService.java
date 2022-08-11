@@ -83,7 +83,7 @@ public class ReportService {
             );
         }
 
-        ReportDTO oldReportDTO = findById(id);
+        ReportDTO oldReportDTO = this.findById(id);
 
         ReportDTO resultReportDTO = ReportDTO.ReportDTOBuilder.aReportDTOWith()
                 .id(id)
@@ -119,7 +119,8 @@ public class ReportService {
     public ReportDTO findById(Long id) {
 
         return reportDTOMapper.fromReport(
-                reportRepository.findById(id).orElseThrow(
+                reportRepository.findById(id)
+                        .orElseThrow(
                         () -> new ReportNotFoundException("Report could not find by id: " + id)
                 )
         );

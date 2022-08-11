@@ -10,14 +10,14 @@ import javax.validation.constraints.NotNull;
 @Data
 public class ReportDTO {
     private Long id;
-    @NotNull(message = "Report's file number cannot be empty.")
-    private int fileNumber;
-    @NotEmpty(message = "Patient's first name cannot be empty.")
+    @NotEmpty(message = "Report file number cannot be empty.")
+    private String fileNumber;
+    @NotEmpty(message = "Patient first name cannot be empty.")
     private String patientFirstName;
-    @NotEmpty(message = "Patient's last name cannot be empty.")
+    @NotEmpty(message = "Patient last name cannot be empty.")
     private String patientLastName;
-    @NotEmpty(message = "Patient's identity number cannot be empty.")
-    @Length(min = 11, max = 11, message = "Patient's identity number length must be 11 characters.")
+    @NotEmpty(message = "Patient identity number cannot be empty.")
+    @Length(min = 11, max = 11, message = "Patient identity number length must be 11 characters.")
     private String patientIdentityNumber;
     private String diagnosisTitle;
     private String diagnosisDetail;
@@ -29,17 +29,16 @@ public class ReportDTO {
     @Transient
     public  String getReportImagePath() {
         if (image == null || id == null) return null;
-        System.out.println("/report-images/" + id + "/" + image);
         return "/report-images/" + id + "/" + image;
     }
 
 
     public static final class ReportDTOBuilder {
         private Long id;
-        private @NotNull(message = "Report's file number cannot be empty.") int fileNumber;
-        private @NotEmpty(message = "Patient's first name cannot be empty.") String patientFirstName;
-        private @NotEmpty(message = "Patient's last name cannot be empty.") String patientLastName;
-        private @NotEmpty(message = "Patient's identity number cannot be empty.") @Length(min = 11, max = 11, message = "Patient's identity number length must be 11 characters.") String patientIdentityNumber;
+        private String fileNumber;
+        private String patientFirstName;
+        private String patientLastName;
+        private String patientIdentityNumber;
         private String diagnosisTitle;
         private String diagnosisDetail;
         private String dateOfIssue;
@@ -58,7 +57,7 @@ public class ReportDTO {
             return this;
         }
 
-        public ReportDTOBuilder fileNumber(int fileNumber) {
+        public ReportDTOBuilder fileNumber(String fileNumber) {
             this.fileNumber = fileNumber;
             return this;
         }

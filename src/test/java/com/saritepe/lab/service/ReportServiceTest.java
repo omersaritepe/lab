@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 class ReportServiceTest {
 
@@ -57,26 +57,27 @@ class ReportServiceTest {
 
         ReportDTO reportDTO = ReportDTO.ReportDTOBuilder.aReportDTOWith()
                 .id(1L)
-                .fileNumber(100)
+                .fileNumber("100")
                 .patientIdentityNumber("10000000000")
                 .patientFirstName("First")
                 .patientLastName("Last")
                 .diagnosisTitle("Title")
                 .diagnosisDetail("Detail")
                 .dateOfIssue("2022-07-30")
+                .image("abc.jpg")
                 .labWorker(reportLabWorkerDTO)
                 .build();
 
         Report report = Report.ReportBuilder.aReportWith()
                 .id(1L)
-                .fileNumber(100)
+                .fileNumber("100")
                 .patientIdentityNumber("10000000000")
                 .patientFirstName("First")
                 .patientLastName("Last")
                 .diagnosisTitle("Title")
                 .diagnosisDetail("Detail")
                 .dateOfIssue("2022-07-30")
-                .image(null)
+                .image("abc.jpg")
                 .labWorker(labWorker)
                 .build();
 
@@ -115,39 +116,59 @@ class ReportServiceTest {
 
         ReportDTO reportDTO = ReportDTO.ReportDTOBuilder.aReportDTOWith()
                 .id(1L)
-                .fileNumber(100)
+                .fileNumber("100")
                 .patientIdentityNumber("10000000000")
                 .patientFirstName("First")
                 .patientLastName("Last")
                 .diagnosisTitle("Title")
                 .diagnosisDetail("Detail")
                 .dateOfIssue("2022-07-30")
+                .image("abc.jpg")
                 .labWorker(reportLabWorkerDTO)
                 .build();
 
         Report report = Report.ReportBuilder.aReportWith()
                 .id(1L)
-                .fileNumber(100)
+                .fileNumber("100")
                 .patientIdentityNumber("10000000000")
                 .patientFirstName("First")
                 .patientLastName("Last")
                 .diagnosisTitle("Title")
                 .diagnosisDetail("Detail")
                 .dateOfIssue("2022-07-30")
+                .image("abc.jpg")
                 .labWorker(labWorker)
                 .build();
 
+        ReportDTO resultReportDTO = ReportDTO.ReportDTOBuilder.aReportDTOWith()
+                .id(1L)
+                .fileNumber("100")
+                .patientIdentityNumber("10000000000")
+                .patientFirstName("First")
+                .patientLastName("Last")
+                .diagnosisTitle("Title")
+                .diagnosisDetail("Detail")
+                .dateOfIssue("2022-07-30")
+                .image("abc.jpg")
+                .labWorker(reportLabWorkerDTO)
+                .build();
+
+
+        Mockito.when(labWorkerService.findByHospitalIdentityNumber("1234567")).thenReturn(reportLabWorkerDTO);
+        Mockito.when(reportRepository.findById(1L)).thenReturn(Optional.of(report));
         Mockito.when(reportMapper.fromDTO(reportDTO)).thenReturn(report);
         Mockito.when(reportRepository.save(report)).thenReturn(report);
         Mockito.when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
 
-        ReportDTO resultReportDTO = service.update(reportDTO, 1L);
+        ReportDTO finalReportDTO = service.update(reportDTO, 1L);
 
-        Assert.assertEquals(resultReportDTO, reportDTO);
+        Assert.assertEquals(finalReportDTO, reportDTO);
 
+        Mockito.verify(labWorkerService).findByHospitalIdentityNumber("1234567");
+        Mockito.verify(reportRepository).findById(1L);
         Mockito.verify(reportMapper).fromDTO(reportDTO);
         Mockito.verify(reportRepository).save(report);
-        Mockito.verify(reportDTOMapper).fromReport(report);
+        Mockito.verify(reportDTOMapper, times(2)).fromReport(report);
     }
 
     @Test
@@ -169,25 +190,27 @@ class ReportServiceTest {
 
         ReportDTO reportDTO = ReportDTO.ReportDTOBuilder.aReportDTOWith()
                 .id(1L)
-                .fileNumber(100)
+                .fileNumber("100")
                 .patientIdentityNumber("10000000000")
                 .patientFirstName("First")
                 .patientLastName("Last")
                 .diagnosisTitle("Title")
                 .diagnosisDetail("Detail")
                 .dateOfIssue("2022-07-30")
+                .image("abc.jpg")
                 .labWorker(reportLabWorkerDTO)
                 .build();
 
         Report report = Report.ReportBuilder.aReportWith()
                 .id(1L)
-                .fileNumber(100)
+                .fileNumber("100")
                 .patientIdentityNumber("10000000000")
                 .patientFirstName("First")
                 .patientLastName("Last")
                 .diagnosisTitle("Title")
                 .diagnosisDetail("Detail")
                 .dateOfIssue("2022-07-30")
+                .image("abc.jpg")
                 .labWorker(labWorker)
                 .build();
 
@@ -231,25 +254,27 @@ class ReportServiceTest {
 
         ReportDTO reportDTO = ReportDTO.ReportDTOBuilder.aReportDTOWith()
                 .id(1L)
-                .fileNumber(100)
+                .fileNumber("100")
                 .patientIdentityNumber("10000000000")
                 .patientFirstName("First")
                 .patientLastName("Last")
                 .diagnosisTitle("Title")
                 .diagnosisDetail("Detail")
                 .dateOfIssue("2022-07-30")
+                .image("abc.jpg")
                 .labWorker(reportLabWorkerDTO)
                 .build();
 
         Report report = Report.ReportBuilder.aReportWith()
                 .id(1L)
-                .fileNumber(100)
+                .fileNumber("100")
                 .patientIdentityNumber("10000000000")
                 .patientFirstName("First")
                 .patientLastName("Last")
                 .diagnosisTitle("Title")
                 .diagnosisDetail("Detail")
                 .dateOfIssue("2022-07-30")
+                .image("abc.jpg")
                 .labWorker(labWorker)
                 .build();
 

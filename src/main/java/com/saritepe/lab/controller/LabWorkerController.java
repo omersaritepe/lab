@@ -26,7 +26,7 @@ public class LabWorkerController {
 
     @GetMapping("/labWorkers")
     public String findAll(Model model/*, @RequestParam("pageSize") int pageSize*/) {
-        return findPaginated(1, 5, "firstName", "asc" , model);
+        return findPaginated(1, 5, "hospitalIdentityNumber", "asc" , model);
     }
 
     /** Save */

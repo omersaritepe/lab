@@ -110,6 +110,7 @@ public class LabWorkerService {
     }
 
     public ReportLabWorkerDTO findByHospitalIdentityNumber(String hospitalIdentityNumber) {
-        return reportLabWorkerDTOMapper.fromLabWorker(labWorkerRepository.findByHospitalIdentityNumber(hospitalIdentityNumber));
+        return reportLabWorkerDTOMapper.fromLabWorker(
+                labWorkerRepository.findByHospitalIdentityNumber(hospitalIdentityNumber));
     }
 }

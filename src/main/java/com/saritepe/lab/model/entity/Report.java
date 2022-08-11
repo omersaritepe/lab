@@ -19,9 +19,10 @@ public class Report {
     private Long id;
     @NotEmpty
     @Column(nullable = false, unique = true)
-    private int fileNumber;
+    private String fileNumber;
     private String patientFirstName;
     private String patientLastName;
+    @Column(nullable = false, unique = true, length = 11)
     private String patientIdentityNumber;
     private String diagnosisTitle;
     private String diagnosisDetail;
@@ -37,7 +38,7 @@ public class Report {
 
     public static final class ReportBuilder {
         private Long id;
-        private @NotEmpty int fileNumber;
+        private @NotEmpty String fileNumber;
         private String patientFirstName;
         private String patientLastName;
         private String patientIdentityNumber;
@@ -59,7 +60,7 @@ public class Report {
             return this;
         }
 
-        public ReportBuilder fileNumber(int fileNumber) {
+        public ReportBuilder fileNumber(String fileNumber) {
             this.fileNumber = fileNumber;
             return this;
         }
@@ -105,7 +106,18 @@ public class Report {
         }
 
         public Report build() {
-            return new Report(id, fileNumber, patientFirstName, patientLastName, patientIdentityNumber, diagnosisTitle, diagnosisDetail, dateOfIssue, image, labWorker);
+            Report report = new Report();
+            report.setId(id);
+            report.setFileNumber(fileNumber);
+            report.setPatientFirstName(patientFirstName);
+            report.setPatientLastName(patientLastName);
+            report.setPatientIdentityNumber(patientIdentityNumber);
+            report.setDiagnosisTitle(diagnosisTitle);
+            report.setDiagnosisDetail(diagnosisDetail);
+            report.setDateOfIssue(dateOfIssue);
+            report.setImage(image);
+            report.setLabWorker(labWorker);
+            return report;
         }
     }
 }

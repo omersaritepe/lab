@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Info</title>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/info.css}" rel="stylesheet">
 
 </head>
 <body>
@@ -11,36 +13,55 @@
 
     <div th:replace="components :: header"></div>
 
-    <h2>Lab Worker ID: [[${labWorkerDTO.id}]]</h2>
-    <h3>Lab Worker First Name: [[${labWorkerDTO.firstName}]]</h3>
-    <h3>Lab Worker Last Name: [[${labWorkerDTO.lastName}]]</h3>
-    <h4>Lab Worker Hospital ID: [[${labWorkerDTO.hospitalIdentityNumber}]]</h4>
+    <div class="card">
+        <div class="card-header">
+            <h4>Hospital ID: [[${labWorkerDTO.hospitalIdentityNumber}]]</h4>
+        </div>
+        <div class="card-body">
+            <h3>Full Name: [[${labWorkerDTO.firstName}]] [[${labWorkerDTO.lastName}]]</h3>
 
+            <hr class="my-4">
 
-    <h1 th:if="${labWorkerDTO.reports.isEmpty()}"> Report Not Found </h1>
+            <a th:href="@{/labWorkers/update/{id}(id = ${labWorkerDTO.id})}"
+               class="btn btn-primary">Update</a>
+            <a sec:authorize="hasAnyAuthority('ROLE_ADMIN')"
+               th:href="@{/labWorkers/delete/{id}(id = ${labWorkerDTO.id})}"
+               class="btn btn-danger">Delete</a>
 
-    <div class="row">
-        <div class="card-group col-sm-4" th:each="report: ${labWorkerDTO.reports}">
-            <div class="card mt-3" style="width: 18rem;">
+            <hr class="my-4">
+        </div>
 
-                <img th:if="${report.image == null}" th:src="@{/images/patient.png}" class="card-img-top rounded mx-auto" th:alt="${report.patientFirstName}" style="width: 225px">
-                <img th:if="${report.image != null}" th:src="@{${report.getReportImagePath()}}" class="card-img-top rounded mx-auto" th:alt="${report.patientFirstName}" style="width: 225px">
+        <h1 th:if="${labWorkerDTO.reports.isEmpty()}"> Report Not Found </h1>
+        <h1 th:if="${!labWorkerDTO.reports.isEmpty()}"> ---Reports--- </h1>
 
-                <div class="card-header">
-                    File Number: [[${report.fileNumber}]]
+        <hr class="my-4">
+
+        <div class="row">
+            <div class="card-group col-sm-4" th:each="report: ${labWorkerDTO.reports}">
+                <div class="card mt-3" style="width: 18rem;">
+
+                    <img th:if="${report.image == null}" th:src="@{/images/patient.png}" class="card-img-top rounded mx-auto" th:alt="${report.patientFirstName}" style="width: 225px">
+                    <img th:if="${report.image != null}" th:src="@{${report.getReportImagePath()}}" class="card-img-top rounded mx-auto" th:alt="${report.patientFirstName}" style="width: 225px">
+
+                    <div class="card-header">
+                        File Number: [[${report.fileNumber}]]
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Full Name: [[${report.patientFirstName + ' ' + report.patientLastName}]]</h4>
+                        <h6>Identity Number: [[${report.patientIdentityNumber}]]</h6>
+                        <h5>Title: [[${report.diagnosisTitle}]]</h5>
+                        <p class="card-text">[[${report.diagnosisDetail}]]</p>
+                        <hr class="my-4">
+                        <a th:href="@{/reports/get/{id}(id = ${report.id})}" class="btn btn-info">Detail</a>
+                    </div>
+
                 </div>
-                <div class="card-body">
-                    <h4 class="card-title">Full Name: [[${report.patientFirstName + ' ' + report.patientLastName}]]</h4>
-                    <h6>Identity Number: [[${report.patientIdentityNumber}]]</h6>
-                    <h5>Title: [[${report.diagnosisTitle}]]</h5>
-                    <p class="card-text">[[${report.diagnosisDetail}]]</p>
-                    <hr class="my-4">
-                    <a th:href="@{/reports/get/{id}(id = ${report.id})}" class="btn btn-info">Detail</a>
-                </div>
-
             </div>
         </div>
+
     </div>
+
+
 
 </div>
 </body>

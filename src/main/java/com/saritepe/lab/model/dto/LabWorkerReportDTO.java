@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class LabWorkerReportDTO {
 
     private Long id;
-    private int fileNumber;
+    private String fileNumber;
     private String patientFirstName;
     private String patientLastName;
     private String patientIdentityNumber;
@@ -23,14 +23,13 @@ public class LabWorkerReportDTO {
     @Transient
     public  String getReportImagePath() {
         if (image == null || id == null) return null;
-        System.out.println("/report-images/" + id + "/" + image);
         return "/report-images/" + id + "/" + image;
     }
 
 
     public static final class LabWorkerReportDTOBuilder {
         private Long id;
-        private int fileNumber;
+        private String fileNumber;
         private String patientFirstName;
         private String patientLastName;
         private String patientIdentityNumber;
@@ -51,7 +50,7 @@ public class LabWorkerReportDTO {
             return this;
         }
 
-        public LabWorkerReportDTOBuilder fileNumber(int fileNumber) {
+        public LabWorkerReportDTOBuilder fileNumber(String fileNumber) {
             this.fileNumber = fileNumber;
             return this;
         }
@@ -93,15 +92,15 @@ public class LabWorkerReportDTO {
 
         public LabWorkerReportDTO build() {
             LabWorkerReportDTO labWorkerReportDTO = new LabWorkerReportDTO();
-            labWorkerReportDTO.image = this.image;
-            labWorkerReportDTO.fileNumber = this.fileNumber;
-            labWorkerReportDTO.patientLastName = this.patientLastName;
-            labWorkerReportDTO.id = this.id;
-            labWorkerReportDTO.dateOfIssue = this.dateOfIssue;
-            labWorkerReportDTO.patientFirstName = this.patientFirstName;
-            labWorkerReportDTO.diagnosisTitle = this.diagnosisTitle;
-            labWorkerReportDTO.patientIdentityNumber = this.patientIdentityNumber;
-            labWorkerReportDTO.diagnosisDetail = this.diagnosisDetail;
+            labWorkerReportDTO.setId(id);
+            labWorkerReportDTO.setFileNumber(fileNumber);
+            labWorkerReportDTO.setPatientFirstName(patientFirstName);
+            labWorkerReportDTO.setPatientLastName(patientLastName);
+            labWorkerReportDTO.setPatientIdentityNumber(patientIdentityNumber);
+            labWorkerReportDTO.setDiagnosisTitle(diagnosisTitle);
+            labWorkerReportDTO.setDiagnosisDetail(diagnosisDetail);
+            labWorkerReportDTO.setDateOfIssue(dateOfIssue);
+            labWorkerReportDTO.setImage(image);
             return labWorkerReportDTO;
         }
     }

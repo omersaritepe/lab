@@ -10,12 +10,12 @@ import javax.validation.constraints.NotEmpty;
 @Data
 public class ReportLabWorkerDTO {
     private Long id;
-    @NotEmpty(message = "Lab Worker's hospital ID cannot be empty.")
+    @NotEmpty(message = "Lab Worker hospital ID cannot be empty.")
     @Length(min = 7, max = 7, message = "Lab Worker's hospital ID length must be 7 characters.")
     private String hospitalIdentityNumber;
-    @NotEmpty(message = "Lab Worker's name cannot be empty.")
+    @NotEmpty(message = "Lab Worker name cannot be empty.")
     private String firstName;
-    @NotEmpty(message = "Lab Worker's last name cannot be empty.")
+    @NotEmpty(message = "Lab Worker last name cannot be empty.")
     private String lastName;
 
 

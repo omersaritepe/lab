@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 
 class LabWorkerServiceTest {
@@ -30,7 +29,6 @@ class LabWorkerServiceTest {
     private LabWorkerRepository labWorkerRepository;
 
     private LabWorkerService labWorkerService;
-
     private ReportService reportService;
 
     private LabWorkerMapper labWorkerMapper;
@@ -182,5 +180,32 @@ class LabWorkerServiceTest {
 
         Mockito.verify(labWorkerRepository).findAll();
         Mockito.verify(labWorkerDTOMapper).fromLabWorker(labWorker);
+    }
+
+    @Test
+    public void testFindByHospitalIdentityNumber_hospitalIDExists_shouldReturnReportLabWorkerDTO() {
+        LabWorker labWorker = LabWorker.LabWorkerBuilder.aLabWorkerWith()
+                .id(1L)
+                .firstName("first")
+                .lastName("last")
+                .hospitalIdentityNumber("1234567")
+                .build();
+
+        ReportLabWorkerDTO reportLabWorkerDTO = ReportLabWorkerDTO.ReportLabWorkerDTOBuilder.aReportLabWorkerDTOWith()
+                .id(1L)
+                .firstName("first")
+                .lastName("last")
+                .hospitalIdentityNumber("1234567")
+                .build();
+
+        when(reportLabWorkerDTOMapper.fromLabWorker(labWorker)).thenReturn(reportLabWorkerDTO);
+        when(labWorkerRepository.findByHospitalIdentityNumber("1234567")).thenReturn(labWorker);
+
+        ReportLabWorkerDTO resultReportLabWorkerDTO = labWorkerService.findByHospitalIdentityNumber("1234567");
+
+        assertEquals(resultReportLabWorkerDTO, reportLabWorkerDTO);
+
+        verify(reportLabWorkerDTOMapper).fromLabWorker(labWorker);
+        verify(labWorkerRepository).findByHospitalIdentityNumber("1234567");
     }
 }
