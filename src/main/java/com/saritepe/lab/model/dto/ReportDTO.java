@@ -5,7 +5,6 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Data
 public class ReportDTO {

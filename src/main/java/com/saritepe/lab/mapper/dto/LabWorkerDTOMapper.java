@@ -6,8 +6,6 @@ import com.saritepe.lab.model.entity.LabWorker;
 import com.saritepe.lab.model.entity.Report;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 

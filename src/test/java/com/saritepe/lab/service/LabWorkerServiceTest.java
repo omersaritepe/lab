@@ -4,17 +4,12 @@ import com.saritepe.lab.mapper.dto.LabWorkerDTOMapper;
 import com.saritepe.lab.mapper.dto.ReportLabWorkerDTOMapper;
 import com.saritepe.lab.mapper.entity.LabWorkerMapper;
 import com.saritepe.lab.model.dto.LabWorkerDTO;
-import com.saritepe.lab.model.dto.ReportDTO;
 import com.saritepe.lab.model.dto.ReportLabWorkerDTO;
 import com.saritepe.lab.model.entity.LabWorker;
-import com.saritepe.lab.model.entity.Report;
 import com.saritepe.lab.model.exception.LabWorkerNotFoundException;
 import com.saritepe.lab.repository.LabWorkerRepository;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,17 +61,17 @@ class LabWorkerServiceTest {
                 .hospitalIdentityNumber("1234567")
                 .build();
 
-        Mockito.when(labWorkerMapper.fromReportLabWorkerDTO(reportLabWorkerDTO)).thenReturn(labWorker);
-        Mockito.when(labWorkerRepository.save(labWorker)).thenReturn(labWorker);
-        Mockito.when(reportLabWorkerDTOMapper.fromLabWorker(labWorker)).thenReturn(reportLabWorkerDTO);
+        when(labWorkerMapper.fromReportLabWorkerDTO(reportLabWorkerDTO)).thenReturn(labWorker);
+        when(labWorkerRepository.save(labWorker)).thenReturn(labWorker);
+        when(reportLabWorkerDTOMapper.fromLabWorker(labWorker)).thenReturn(reportLabWorkerDTO);
 
         ReportLabWorkerDTO resultReportLabWorkerDTO = labWorkerService.save(reportLabWorkerDTO);
 
-        Assert.assertEquals(resultReportLabWorkerDTO, reportLabWorkerDTO);
+        assertEquals(resultReportLabWorkerDTO, reportLabWorkerDTO);
 
-        Mockito.verify(labWorkerMapper).fromReportLabWorkerDTO(reportLabWorkerDTO);
-        Mockito.verify(labWorkerRepository).save(labWorker);
-        Mockito.verify(reportLabWorkerDTOMapper).fromLabWorker(labWorker);
+        verify(labWorkerMapper).fromReportLabWorkerDTO(reportLabWorkerDTO);
+        verify(labWorkerRepository).save(labWorker);
+        verify(reportLabWorkerDTOMapper).fromLabWorker(labWorker);
     }
 
     @Test
@@ -95,17 +90,17 @@ class LabWorkerServiceTest {
                 .hospitalIdentityNumber("1234567")
                 .build();
 
-        Mockito.when(labWorkerMapper.fromReportLabWorkerDTO(reportLabWorkerDTO)).thenReturn(labWorker);
-        Mockito.when(labWorkerRepository.save(labWorker)).thenReturn(labWorker);
-        Mockito.when(reportLabWorkerDTOMapper.fromLabWorker(labWorker)).thenReturn(reportLabWorkerDTO);
+        when(labWorkerMapper.fromReportLabWorkerDTO(reportLabWorkerDTO)).thenReturn(labWorker);
+        when(labWorkerRepository.save(labWorker)).thenReturn(labWorker);
+        when(reportLabWorkerDTOMapper.fromLabWorker(labWorker)).thenReturn(reportLabWorkerDTO);
 
         ReportLabWorkerDTO resultReportLabWorkerDTO = labWorkerService.update(reportLabWorkerDTO, 1L);
 
-        Assert.assertEquals(resultReportLabWorkerDTO, reportLabWorkerDTO);
+        assertEquals(resultReportLabWorkerDTO, reportLabWorkerDTO);
 
-        Mockito.verify(labWorkerMapper).fromReportLabWorkerDTO(reportLabWorkerDTO);
-        Mockito.verify(labWorkerRepository).save(labWorker);
-        Mockito.verify(reportLabWorkerDTOMapper).fromLabWorker(labWorker);
+        verify(labWorkerMapper).fromReportLabWorkerDTO(reportLabWorkerDTO);
+        verify(labWorkerRepository).save(labWorker);
+        verify(reportLabWorkerDTOMapper).fromLabWorker(labWorker);
     }
 
     @Test
@@ -131,23 +126,23 @@ class LabWorkerServiceTest {
                 .hospitalIdentityNumber("1234567")
                 .build();
 
-        Mockito.when(labWorkerDTOMapper.fromLabWorker(labWorker)).thenReturn(labWorkerDTO);
-        Mockito.when(labWorkerRepository.findById(1L)).thenReturn(Optional.of(labWorker));
+        when(labWorkerDTOMapper.fromLabWorker(labWorker)).thenReturn(labWorkerDTO);
+        when(labWorkerRepository.findById(1L)).thenReturn(Optional.of(labWorker));
 
         LabWorkerDTO resultRabWorkerDTO = labWorkerService.findById(1L);
 
-        Assert.assertEquals(resultRabWorkerDTO, labWorkerDTO);
+        assertEquals(resultRabWorkerDTO, labWorkerDTO);
 
-        Mockito.verify(labWorkerDTOMapper).fromLabWorker(labWorker);
-        Mockito.verify(labWorkerRepository).findById(1L);
+        verify(labWorkerDTOMapper).fromLabWorker(labWorker);
+        verify(labWorkerRepository).findById(1L);
     }
 
     @Test
     public void testFindById_IdNotExists_shouldReturnThrowLabWorkerNotFoundException() {
 
-        Mockito.when(labWorkerRepository.findById(1L)).thenReturn(Optional.empty());
+        when(labWorkerRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(LabWorkerNotFoundException.class,
+        assertThrows(LabWorkerNotFoundException.class,
                 () -> labWorkerService.findById(1L));
     }
 
@@ -171,15 +166,15 @@ class LabWorkerServiceTest {
         ArrayList<LabWorker> labWorkers = new ArrayList<>();
         labWorkers.add(labWorker);
 
-        Mockito.when(labWorkerRepository.findAll()).thenReturn(labWorkers);
-        Mockito.when(labWorkerDTOMapper.fromLabWorker(labWorker)).thenReturn(labWorkerDTO);
+        when(labWorkerRepository.findAll()).thenReturn(labWorkers);
+        when(labWorkerDTOMapper.fromLabWorker(labWorker)).thenReturn(labWorkerDTO);
 
         List<LabWorkerDTO> resultLabWorkers = labWorkerService.findAll();
 
-        Assert.assertEquals(resultLabWorkers.get(0), labWorkerDTO);
+        assertEquals(resultLabWorkers.get(0), labWorkerDTO);
 
-        Mockito.verify(labWorkerRepository).findAll();
-        Mockito.verify(labWorkerDTOMapper).fromLabWorker(labWorker);
+        verify(labWorkerRepository).findAll();
+        verify(labWorkerDTOMapper).fromLabWorker(labWorker);
     }
 
     @Test

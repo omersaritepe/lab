@@ -1,11 +1,8 @@
 package com.saritepe.lab.model.dto;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.Transient;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 public class LabWorkerReportDTO {

@@ -1,6 +1,5 @@
 package com.saritepe.lab.repository;
 
-import com.saritepe.lab.model.dto.ReportDTO;
 import com.saritepe.lab.model.entity.Report;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

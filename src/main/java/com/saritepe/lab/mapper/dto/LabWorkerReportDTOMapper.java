@@ -4,9 +4,6 @@ import com.saritepe.lab.model.dto.LabWorkerReportDTO;
 import com.saritepe.lab.model.entity.Report;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-import java.util.Set;
-
 @Component
 public class LabWorkerReportDTOMapper {
     public LabWorkerReportDTO fromReport(Report report) {

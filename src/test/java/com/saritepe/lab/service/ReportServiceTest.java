@@ -8,16 +8,14 @@ import com.saritepe.lab.model.entity.LabWorker;
 import com.saritepe.lab.model.entity.Report;
 import com.saritepe.lab.model.exception.ReportNotFoundException;
 import com.saritepe.lab.repository.ReportRepository;
-import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class ReportServiceTest {
@@ -81,20 +79,20 @@ class ReportServiceTest {
                 .labWorker(labWorker)
                 .build();
 
-        Mockito.when(labWorkerService.findByHospitalIdentityNumber("1234567")).thenReturn(reportLabWorkerDTO);
-        Mockito.when(reportMapper.fromDTO(reportDTO)).thenReturn(report);
-        Mockito.when(reportRepository.save(report)).thenReturn(report);
-        Mockito.when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
+        when(labWorkerService.findByHospitalIdentityNumber("1234567")).thenReturn(reportLabWorkerDTO);
+        when(reportMapper.fromDTO(reportDTO)).thenReturn(report);
+        when(reportRepository.save(report)).thenReturn(report);
+        when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
 
         ReportDTO resultReportDTO = service.save(reportDTO);
 
 
-        Assert.assertEquals(resultReportDTO, reportDTO);
+        assertEquals(resultReportDTO, reportDTO);
 
-        Mockito.verify(labWorkerService).findByHospitalIdentityNumber("1234567");
-        Mockito.verify(reportMapper).fromDTO(reportDTO);
-        Mockito.verify(reportRepository).save(report);
-        Mockito.verify(reportDTOMapper).fromReport(report);
+        verify(labWorkerService).findByHospitalIdentityNumber("1234567");
+        verify(reportMapper).fromDTO(reportDTO);
+        verify(reportRepository).save(report);
+        verify(reportDTOMapper).fromReport(report);
     }
 
     @Test
@@ -154,21 +152,21 @@ class ReportServiceTest {
                 .build();
 
 
-        Mockito.when(labWorkerService.findByHospitalIdentityNumber("1234567")).thenReturn(reportLabWorkerDTO);
-        Mockito.when(reportRepository.findById(1L)).thenReturn(Optional.of(report));
-        Mockito.when(reportMapper.fromDTO(reportDTO)).thenReturn(report);
-        Mockito.when(reportRepository.save(report)).thenReturn(report);
-        Mockito.when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
+        when(labWorkerService.findByHospitalIdentityNumber("1234567")).thenReturn(reportLabWorkerDTO);
+        when(reportRepository.findById(1L)).thenReturn(Optional.of(report));
+        when(reportMapper.fromDTO(reportDTO)).thenReturn(report);
+        when(reportRepository.save(report)).thenReturn(report);
+        when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
 
         ReportDTO finalReportDTO = service.update(reportDTO, 1L);
 
-        Assert.assertEquals(finalReportDTO, reportDTO);
+        assertEquals(finalReportDTO, reportDTO);
 
-        Mockito.verify(labWorkerService).findByHospitalIdentityNumber("1234567");
-        Mockito.verify(reportRepository).findById(1L);
-        Mockito.verify(reportMapper).fromDTO(reportDTO);
-        Mockito.verify(reportRepository).save(report);
-        Mockito.verify(reportDTOMapper, times(2)).fromReport(report);
+        verify(labWorkerService).findByHospitalIdentityNumber("1234567");
+        verify(reportRepository).findById(1L);
+        verify(reportMapper).fromDTO(reportDTO);
+        verify(reportRepository).save(report);
+        verify(reportDTOMapper, times(2)).fromReport(report);
     }
 
     @Test
@@ -214,24 +212,24 @@ class ReportServiceTest {
                 .labWorker(labWorker)
                 .build();
 
-        Mockito.when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
-        Mockito.when(reportRepository.findById(1L)).thenReturn(Optional.of(report));
+        when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
+        when(reportRepository.findById(1L)).thenReturn(Optional.of(report));
 
         ReportDTO resultReport = service.findById(1L);
 
-        Assert.assertEquals(resultReport, reportDTO);
+        assertEquals(resultReport, reportDTO);
 
-        Mockito.verify(reportDTOMapper).fromReport(report);
-        Mockito.verify(reportRepository).findById(1L);
+        verify(reportDTOMapper).fromReport(report);
+        verify(reportRepository).findById(1L);
 
     }
 
     @Test
     public void testFindByID_whenIdNotExists_shouldReturnThrowReportNotFoundException() {
 
-        Mockito.when(reportRepository.findById(1L)).thenReturn(Optional.empty());
+        when(reportRepository.findById(1L)).thenReturn(Optional.empty());
 
-        Assertions.assertThrows(ReportNotFoundException.class,
+        assertThrows(ReportNotFoundException.class,
                 () -> service.findById(1L));
     }
 
@@ -281,15 +279,15 @@ class ReportServiceTest {
         ArrayList<Report> reports = new ArrayList<>();
         reports.add(report);
 
-        Mockito.when(reportRepository.findAll()).thenReturn(reports);
-        Mockito.when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
+        when(reportRepository.findAll()).thenReturn(reports);
+        when(reportDTOMapper.fromReport(report)).thenReturn(reportDTO);
 
         List<ReportDTO> resultReports = service.findAll();
 
-        Assert.assertEquals(resultReports.get(0), reportDTO);
+        assertEquals(resultReports.get(0), reportDTO);
 
-        Mockito.verify(reportRepository).findAll();
-        Mockito.verify(reportDTOMapper).fromReport(report);
+        verify(reportRepository).findAll();
+        verify(reportDTOMapper).fromReport(report);
 
     }
 }

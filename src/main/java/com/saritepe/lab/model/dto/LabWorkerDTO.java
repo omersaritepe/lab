@@ -1,11 +1,8 @@
 package com.saritepe.lab.model.dto;
 
-import com.saritepe.lab.model.entity.Report;
 import lombok.Data;
-import lombok.Getter;
 
 import java.util.Set;
-import java.util.function.Supplier;
 
 @Data
 public class LabWorkerDTO {
