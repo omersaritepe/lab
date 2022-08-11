@@ -56,6 +56,8 @@ For user login:
 <ul>
     <li>Save, delete, get and update operations.</li>
     <li>Search operations.</li>
+    <li>Image upload.</li>
+    <li>Validation operations.</li>
     <li>Pagination and sorting operations.</li>
     <li>Test operations.</li>
     <li>Software conforming to code standards.</li>
