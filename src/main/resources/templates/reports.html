@@ -13,7 +13,7 @@
 
     <div th:replace="components :: header"></div>
 
-    <form class="text-center mb-4 form-group" th:action="@{'/reports/page/1/' + ${pageSize}}" th:if="${!reportDTOS.isEmpty()}">
+    <form class="text-center mb-4 form-group" th:action="@{'/reports/page/1/' + ${pageSize}}">
         Filter:
         <input type="hidden" name="sortField" th:value="${sortField}" required>
         <input type="hidden" name="sortDirection" th:value="${sortDirection}" required>
@@ -22,7 +22,7 @@
         <a class="btn btn-outline-danger" th:href="@{/reports}">Clear</a>
     </form>
 
-    <a type="button" class="btn btn-success" th:href="@{/reports/save}">
+    <a type="button" class="btn btn-success mb-3" th:href="@{/reports/save}">
         <i class="bi bi-person-plus-fill"> Save</i>
     </a>
 
