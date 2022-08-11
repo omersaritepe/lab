@@ -13,7 +13,7 @@
 
     <div th:replace="components :: header"></div>
 
-    <form class="text-center mb-4 form-group" th:action="@{'/reports/page/1/' + ${pageSize}}">
+    <form class="text-center mb-4 form-group" th:action="@{'/reports/page/1/' + ${pageSize}}" th:if="${!reportDTOS.isEmpty()}">
         Filter:
         <input type="hidden" name="sortField" th:value="${sortField}" required>
         <input type="hidden" name="sortDirection" th:value="${sortDirection}" required>
@@ -27,7 +27,8 @@
     </a>
 
 
-    <div class="table-responsive-md mt-3">
+    <h2 th:if="${reportDTOS.isEmpty()}">No registered report found in the system...</h2>
+    <div class="table-responsive-md mt-3" th:if="${!reportDTOS.isEmpty()}">
         <table class="table table-dark table-striped">
             <thead class="bg-dark">
             <tr>

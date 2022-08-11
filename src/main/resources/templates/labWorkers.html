@@ -20,7 +20,8 @@
         <i class="bi bi-person-plus-fill"> Save</i>
     </a>
 
-    <div class="table-responsive-md mt-5">
+    <h2 th:if="${listLabWorkers.isEmpty()}">Law Worker Not Found</h2>
+    <div class="table-responsive-md mt-5" th:if="${!listLabWorkers.isEmpty()}">
         <table class="table table-dark table-striped">
             <thead class="bg-dark">
             <tr>
@@ -118,12 +119,13 @@
 
 
         </nav>
+        Lab Workers: [[${totalElements}]] /
+        Total Page: [[${totalPages}]] /
+        Current Page: [[${currentPage}]] /
+        Sort Field: [[${sortField}]] /
+        Page Size: [[${pageSize}]]
     </div>
-    Lab Workers: [[${totalElements}]] /
-    Total Page: [[${totalPages}]] /
-    Current Page: [[${currentPage}]] /
-    Sort Field: [[${sortField}]] /
-    Page Size: [[${pageSize}]]
+
 
 </div>
 
