@@ -76,7 +76,7 @@
                 <th scope="row" th:text="${report.dateOfIssue}"></th>
                 <th scope="row" th:if="${report.labWorker != null}"
                     th:text="${report.labWorker.hospitalIdentityNumber}"></th>
-
+                <th scope="row" th:if="${report.labWorker == null}">---</th>
                 <th scope="row">
                     <a th:href="@{/reports/update/{id}(id = ${report.id})}"
                        class="btn btn-primary"><i class="bi bi-tools"> Update</i></a>

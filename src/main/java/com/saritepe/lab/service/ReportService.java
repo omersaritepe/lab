@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -109,6 +110,15 @@ public class ReportService {
         ReportDTO reportDTO = findById(id);
 
         update(ReportDTO.ReportDTOBuilder.aReportDTOWith()
+                .id(id)
+                .fileNumber(reportDTO.getFileNumber())
+                .patientFirstName(reportDTO.getPatientFirstName())
+                .patientLastName(reportDTO.getPatientLastName())
+                .patientIdentityNumber(reportDTO.getPatientIdentityNumber())
+                .diagnosisTitle(reportDTO.getDiagnosisTitle())
+                .diagnosisDetail(reportDTO.getDiagnosisDetail())
+                .dateOfIssue(reportDTO.getDateOfIssue())
+                .image(reportDTO.getImage())
                 .labWorker(null)
                 .build(), id);
 
@@ -141,7 +151,7 @@ public class ReportService {
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);
 
-        if (keyword != null) {
+        if (!Objects.equals(keyword, "")) {
 
             keyword = keyword.toLowerCase();
 
